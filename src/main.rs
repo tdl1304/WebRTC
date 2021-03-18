@@ -6,18 +6,18 @@ use std::thread::sleep;
 use std::time::Duration;
 
 fn main() {
-    let something = stun_handler::Headers {
+    let _something = stun_handler::Headers {
         message_type: 0,
         message_length: 0,
         magic_cookie: 0,
         transaction_id: 0,
     };
 
-    let t1 = thread::spawn(move || {
+    let _t1 = thread::spawn(move || {
         loop {
             sleep(Duration::from_millis(5000));
             println!("Trying to connect");
-            let stream = TcpStream::connect("127.0.0.1:8080");
+            let _stream = TcpStream::connect("127.0.0.1:8080");
         }
     });
 
