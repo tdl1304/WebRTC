@@ -1,9 +1,18 @@
+mod stun_handler;
+
 use std::net::{TcpListener, TcpStream};
 use std::thread;
 use std::thread::sleep;
 use std::time::Duration;
 
 fn main() {
+    let something = stun_handler::Headers{
+        message_type: 0,
+        message_length: 0,
+        magic_cookie: 0,
+        transaction_id: 0
+    };
+
     let t1 = thread::spawn(move || {
         while (true) {
             sleep(Duration::from_millis(5000));
