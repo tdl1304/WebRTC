@@ -1,5 +1,5 @@
 // Header constants
-const MAGIC_COOKIE:u32 = 0x2112a442;
+const MAGIC_COOKIE: u32 = 0x2112a442;
 const SUCCESS_RESPONSE: u16 = 0x0101;
 const BINDING_REQUEST: u16 = 0x0001;
 
@@ -38,7 +38,7 @@ pub struct Headers {
     /// Magic cookie is always set to 0x2112a442
     pub magic_cookie: u32,
     /// 96 bit identifier, this is always set by the client
-    pub transaction_id: usize //96 bit only accepted
+    pub transaction_id: usize, //96 bit only accepted
 }
 
 /// Attribute-Headers
@@ -174,4 +174,3 @@ pub struct UnknownAttributes {
     pub attribute_type3: u16,
     pub attribute_type4: u16,
 }
-

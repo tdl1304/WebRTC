@@ -13,13 +13,11 @@ fn main() {
         transaction_id: 0,
     };
 
-    let _t1 = thread::spawn(move || {
-        loop {
-            sleep(Duration::from_millis(5000));
-            println!("Trying to connect");
-            let _stream = TcpStream::connect("127.0.0.1:8080");
-        }
-    });
+    let _t1 = thread::spawn(move || loop {
+        sleep(Duration::from_millis(5000));
+        println!("Trying to connect");
+        let _stream = TcpStream::connect("127.0.0.1:8080");
+    } ) ;
 
     println!("b4");
     let listener = TcpListener::bind("127.0.0.1:8080").unwrap();
@@ -29,9 +27,4 @@ fn main() {
         let client = listener.accept().unwrap();
         println!("Client connected {}", client.1.to_string())
     }
-
-
 }
-
-
-
