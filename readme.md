@@ -1,4 +1,4 @@
-#Lag en README.md fil for STUN-serveren. Ta med:  
+# Lag en README.md fil for STUN-serveren. Ta med:  
 Navn på STUN-serveren og eventuell lenke til siste continuous integration/deployment kjøring  
 Introduksjon  
 Implementert funksjonalitet  

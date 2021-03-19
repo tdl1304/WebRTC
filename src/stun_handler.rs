@@ -30,6 +30,7 @@ const IPV6: u8 = 0x02;
 /// };
 /// ```
 /// This is then followed up by an attribute header if this were a response
+#[derive(Debug)]
 pub struct Headers {
     /// Type of STUN-message
     pub message_type: u16,
@@ -38,7 +39,7 @@ pub struct Headers {
     /// Magic cookie is always set to 0x2112a442
     pub magic_cookie: u32,
     /// 96 bit identifier, this is always set by the client
-    pub transaction_id: usize, //96 bit only accepted
+    pub transaction_id: u128, //96 bit only accepted
 }
 
 /// Attribute-Headers
@@ -173,4 +174,35 @@ pub struct UnknownAttributes {
     pub attribute_type2: u16,
     pub attribute_type3: u16,
     pub attribute_type4: u16,
+}
+
+/// Validating headers
+///
+/// This server only accepts binding requests
+/// Returns [`false`] if one of the attributes are not valid, else [`true`]
+pub fn validate_headers(headers: Headers) -> bool{
+    if headers.message_type != BINDING_REQUEST {
+        return false;
+    } else if headers.magic_cookie != MAGIC_COOKIE {
+        return false;
+    }
+    true
+}
+
+/// Formats byte array of 2 bytes into a unsigned 16 bit number
+pub fn format_bytes16( mut buf: &mut [u8]) -> u16 {
+    println!("{:#x},{:#x}", buf[0], buf[1]);
+    let number = ((buf[0] as u16) << 8) | buf[1] as u16;
+    number
+}
+
+/// Formats byte array of 4 bytes into a unsigned 32 bit number
+pub fn format_bytes32( mut buf: &mut [u8]) -> u32 {
+    let number = ((format_bytes16(&mut buf[0..2]) as u32) << 16) | (format_bytes16(&mut buf[2..4]) as u32);
+    number
+}
+/// Formats byte array of 12 bytes into a unsigned 96 bit number as usize
+pub fn format_bytes96( mut buf: &mut [u8]) -> u128 {
+    let number = (format_bytes32(&mut buf[0..4]) as u128) << 64 | (format_bytes32(&mut buf[4..8]) as u128) << 32 | (format_bytes32(&mut buf[8..12]) as u128);
+    number
 }

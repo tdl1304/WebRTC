@@ -1,4 +1,5 @@
 mod stun_handler;
+mod udp_handler;
 
 use std::net::{TcpListener, TcpStream};
 use std::thread;
@@ -6,18 +7,13 @@ use std::thread::sleep;
 use std::time::Duration;
 
 fn main() {
-    let _something = stun_handler::Headers {
-        message_type: 0,
-        message_length: 0,
-        magic_cookie: 0,
-        transaction_id: 0,
-    };
+    udp_handler::init(String::from("127.0.0.1"));
 
     let _t1 = thread::spawn(move || loop {
         sleep(Duration::from_millis(5000));
         println!("Trying to connect");
         let _stream = TcpStream::connect("127.0.0.1:8080");
-    } ) ;
+    });
 
     println!("b4");
     let listener = TcpListener::bind("127.0.0.1:8080").unwrap();
