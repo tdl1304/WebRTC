@@ -258,7 +258,7 @@ fn success_response(socket_address: SocketAddr, transaction_id: [u8; 12]) -> Vec
         attribute_length: 0,                // 2 bytes
     };
 
-    return match socket_address.ip() {
+    match socket_address.ip() {
         IpAddr::V6(ip) => {
             let xor_mapped_address = XorMappedAddressV6 {
                 reserved: 0x0,
@@ -278,7 +278,7 @@ fn success_response(socket_address: SocketAddr, transaction_id: [u8; 12]) -> Vec
             };
             _serialize(xor_mapped_address, attribute, headers)
         }
-    };
+    }
 }
 
 /// Creates bytes for a error message binding request
@@ -370,13 +370,13 @@ pub fn process_request(buffer: &[u8], socket_address: SocketAddr) -> Vec<u8> {
 
     let (valid, unknown_attributes) = validate_headers(headers);
 
-    return if valid {
+    if valid {
         //When headers are valid
         success_response(socket_address, headers.transaction_id)
     } else {
         //When some elements are unknown
         error_response420(unknown_attributes, headers.transaction_id)
-    };
+    }
 }
 
 /// Formats byte array of 2 bytes into a unsigned 16 bit number
@@ -389,8 +389,7 @@ pub fn process_request(buffer: &[u8], socket_address: SocketAddr) -> Vec<u8> {
 /// assert_eq!(number, answer);
 /// ```
 fn format_bytes16(buf: &[u8]) -> u16 {
-    let number = ((buf[0] as u16) << 8) | buf[1] as u16;
-    number
+    ((buf[0] as u16) << 8) | buf[1] as u16
 }
 
 /// Formats byte array of 4 bytes into a unsigned 32 bit number
@@ -403,8 +402,7 @@ fn format_bytes16(buf: &[u8]) -> u16 {
 /// assert_eq!(number, answer);
 /// ```
 fn format_bytes32(buf: &[u8]) -> u32 {
-    let number = ((format_bytes16(&buf[0..2]) as u32) << 16) | (format_bytes16(&buf[2..4]) as u32);
-    number
+    ((format_bytes16(&buf[0..2]) as u32) << 16) | (format_bytes16(&buf[2..4]) as u32)
 }
 
 /// Formats byte array of 8 bytes into a unsigned 64 bit number
@@ -417,8 +415,7 @@ fn format_bytes32(buf: &[u8]) -> u32 {
 /// assert_eq!(number, answer);
 /// ```
 fn format_bytes64(buf: &[u8]) -> u64 {
-    let number = ((format_bytes32(&buf[0..4]) as u64) << 16) | (format_bytes32(&buf[4..8]) as u64);
-    number
+    ((format_bytes32(&buf[0..4]) as u64) << 16) | (format_bytes32(&buf[4..8]) as u64)
 }
 
 /// Formats byte array of 12 bytes into a unsigned 96 bit number as u128
@@ -431,10 +428,9 @@ fn format_bytes64(buf: &[u8]) -> u64 {
 /// assert_eq!(number, answer);
 /// ```
 fn format_bytes96(buf: &[u8; 12]) -> u128 {
-    let number = (format_bytes32(&buf[0..4]) as u128) << 64
+    (format_bytes32(&buf[0..4]) as u128) << 64
         | (format_bytes32(&buf[4..8]) as u128) << 32
-        | (format_bytes32(&buf[8..12]) as u128);
-    number
+        | (format_bytes32(&buf[8..12]) as u128)
 }
 
 /// Formats byte array of 16 bytes into a unsigned 128 bit number as u128
@@ -447,8 +443,7 @@ fn format_bytes96(buf: &[u8; 12]) -> u128 {
 /// assert_eq!(number, answer);
 /// ```
 fn format_bytes128(buf: &[u8]) -> u128 {
-    let number = (format_bytes64(&buf[0..8]) as u128) << 64 | (format_bytes64(&buf[8..16]) as u128);
-    number
+    (format_bytes64(&buf[0..8]) as u128) << 64 | (format_bytes64(&buf[8..16]) as u128)
 }
 
 /// Serialize structs (T, [`Attribute`], [`Headers`])
