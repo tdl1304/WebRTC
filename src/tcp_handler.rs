@@ -51,10 +51,10 @@ fn handler(mut stream: TcpStream) {
         let buffer = process_request(buffer, stream.local_addr().unwrap());
         match stream.write(&buffer) {
             Ok(_) => {
-                println!("Sending msg {:x?}", buffer);
+                println!("Sending msg to {}, {:x?}", src_address, buffer);
             }
             Err(_) => {
-                eprintln!("Error when sending tcp message {:x?}", buffer)
+                eprintln!("Error when sending udp message to {}, {:x?}", src_address, buffer);
             }
         };
         stream.flush().unwrap();

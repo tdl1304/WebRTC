@@ -25,10 +25,10 @@ fn listen_forever(socket: UdpSocket, mut buffer: &mut [u8]) {
         let buffer = process_request(buffer, src_address);
         match socket.send_to(&buffer, src_address) {
             Ok(_) => {
-                println!("Sending msg {:x?}", buffer);
+                println!("Sending msg to {}, {:x?}", src_address, buffer);
             }
             Err(_) => {
-                eprintln!("Error when sending udp message {:x?}", buffer)
+                eprintln!("Error when sending udp message to {}, {:x?}", src_address, buffer);
             }
         };
     }
