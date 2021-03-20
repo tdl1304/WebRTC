@@ -28,7 +28,10 @@ fn listen_forever(socket: UdpSocket, mut buffer: &mut [u8]) {
                 println!("Sending msg to {}, {:x?}", src_address, buffer);
             }
             Err(_) => {
-                eprintln!("Error when sending udp message to {}, {:x?}", src_address, buffer);
+                eprintln!(
+                    "Error when sending udp message to {}, {:x?}",
+                    src_address, buffer
+                );
             }
         };
     }
