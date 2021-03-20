@@ -1,15 +1,21 @@
+use crate::stun_handler::process_request;
 use std::net::UdpSocket;
 use std::thread;
-use crate::stun_handler::process_request;
+use std::thread::JoinHandle;
 
 const PORT: &str = "3478";
 const MAX_LENGTH: usize = 576;
 
-pub fn init(ip: String) {
+/// Initiate server to listen for UDP on port 3478
+///
+/// Incomming packets are sequentially handled in a single thread, which is not main thread
+///
+/// Returns joinhandle for udp listener
+pub fn init(ip: String) -> JoinHandle<()> {
     let address = ip + ":" + PORT;
     let socket: UdpSocket = UdpSocket::bind(address).unwrap();
     let mut buf = [0; MAX_LENGTH];
-    thread::spawn(move || listen_forever(socket, &mut buf));
+    thread::spawn(move || listen_forever(socket, &mut buf))
 }
 
 fn listen_forever(socket: UdpSocket, mut buffer: &mut [u8]) {
@@ -18,8 +24,12 @@ fn listen_forever(socket: UdpSocket, mut buffer: &mut [u8]) {
         let buffer = &buffer[..length];
         let buffer = process_request(buffer, src_address);
         match socket.send_to(&buffer, src_address) {
-            Ok(_) => {println!("Sending msg {:x?}", buffer);}
-            Err(_) => {eprintln!("Error when sending udp message {:x?}", buffer)}
+            Ok(_) => {
+                println!("Sending msg {:x?}", buffer);
+            }
+            Err(_) => {
+                eprintln!("Error when sending udp message {:x?}", buffer)
+            }
         };
     }
 }

@@ -1,8 +1,8 @@
+#[allow(deprecated)]
+use bincode::config;
+use serde::{Deserialize, Serialize};
 use std::convert::TryFrom;
 use std::net::{IpAddr, SocketAddr};
-#[allow(deprecated)]
-use bincode::{config};
-use serde::{Deserialize, Serialize};
 
 // Header constants
 const MAGIC_COOKIE: u32 = 0x2112a442;
@@ -213,7 +213,7 @@ struct Error420 {
 /// This server only accepts binding requests
 /// Returns [`false`] and array of unknown attributes if one of the attributes are not valid, else [`true`] and array with zeros
 fn validate_headers(headers: Headers) -> (bool, [u16; 4]) {
-    if headers.message_type == BINDING_REQUEST {
+    if headers.message_type != BINDING_REQUEST {
         return (false, [headers.message_type, 0, 0, 0]);
     } else if headers.magic_cookie != MAGIC_COOKIE {
         return (
