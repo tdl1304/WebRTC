@@ -28,7 +28,7 @@ This readme will only cover the STUN-Server, however instructions for starting t
     
 * No support for encrypted endpoint protocols (SSL/TSL)
 
-##External Dependencies
+## External Dependencies
 * [Bincode](https://github.com/bincode-org/bincode)
     * A compact encoder / decoder pair that uses a binary zero-fluff encoding scheme. 
       The size of the encoded object will be the same or smaller than the size that the object takes up in memory in a running Rust program.
@@ -39,7 +39,7 @@ This readme will only cover the STUN-Server, however instructions for starting t
     
     * Used in conjunction with Bincode to serialize structs into byte arrays
     
-##Installation & How To Run
+## Installation & How To Run
 *For development*
 ### STUN-Server
 1. After cloning repository through terminal, or directly through an IDE. 
@@ -49,7 +49,7 @@ This readme will only cover the STUN-Server, however instructions for starting t
     cargo run
     ```
 2. Stun server is now running on port 3478. Make sure to configure firewall and NAT portforwarding for use.
-###WebRTC
+### WebRTC
 1. Set working repository to WebRTC folder.
 2. Enter into terminal:
     ````
@@ -61,12 +61,12 @@ This readme will only cover the STUN-Server, however instructions for starting t
     ````
 3. Server is now running on port 443 and 80, with a peer server running on port 3001.
 
-##Running tests
+## Running tests
 To run tests, run command:
 ````
 cargo test
 ````
-##API documentation
+## API documentation
 Clone project and open index.html file: project-folder/docs/stun-server/index.html  
 Or run in terminal:
 ````
