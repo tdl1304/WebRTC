@@ -43,14 +43,14 @@ io.on("connection", (socket) => {
     setTimeout(() => {
       socket.to(roomId).emit("user-connected", userId);
       // when is loads too fast, the camera wont load in
-    }, 1500);
+    }, 1000);
 
     setTimeout(() => {
       socket.on("disconnect", () => {
         socket.to(roomId).emit("user-disconnected", userId);
         // when it is disconnected too fast it wont remove in time
       });
-    }, 1000);
+    }, 0);
   });
 });
 
