@@ -1,3 +1,5 @@
-/target
+/target/debug
+/target/.rustc_info.json
+/target/CACHEDIR.TAG
 /.idea
 /WebRTC/node_modules/
