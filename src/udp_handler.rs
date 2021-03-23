@@ -19,6 +19,7 @@ pub fn init(ip: String) -> JoinHandle<()> {
 }
 
 fn listen_forever(socket: UdpSocket, mut buffer: &mut [u8]) {
+    println!("UDP server running on port {}", PORT);
     loop {
         let (length, src_address) = socket.recv_from(&mut buffer).expect("no data received");
         let buffer = &buffer[..length];

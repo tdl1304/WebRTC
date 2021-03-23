@@ -22,6 +22,7 @@ pub fn init(ip: String) -> JoinHandle<()> {
 
 fn listen_forever(socket: TcpListener) -> JoinHandle<()> {
     thread::spawn(move || {
+        println!("TCP server running on port {}", PORT);
         for streams in socket.incoming() {
             match streams {
                 Err(e) => {
