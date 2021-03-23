@@ -1,6 +1,6 @@
 # WebRTC & STUN-Server 
-[Last CI run](https://github.com/tdl1304/WebRTC/actions/runs/680292306)
-##Introduction
+[Last CI run](https://github.com/tdl1304/WebRTC/actions/runs/680292306)  
+## Introduction
 This is my solution to an optional assignment in the subject IDATT2104 at NTNU Trondheim. 
 The solution includes a non-fully implemented STUN-Server in rustlang and a WebRTC program, that utilizes this STUN-Server. 
 The WebRTC program uses peerjs, and stun server is currently set to my own stun server.  
