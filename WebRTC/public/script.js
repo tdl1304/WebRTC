@@ -8,7 +8,7 @@ const myVideo = document.createElement("video")
 const myPeer = new Peer(undefined, {
   config: {
     iceServers: [
-      { url: "stun:84.210.210.181:3478" },
+      { url: "stun:84.210.213.159:3478" },
       {
         url: "turn:numb.viagenie.ca",
         credential: "muazkh",
